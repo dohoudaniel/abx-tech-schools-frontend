@@ -7,6 +7,14 @@ import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatDistanceToNow } from 'date-fns';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow
+} from '@/components/ui/table';
 
 const StatCard = ({ icon: Icon, label, value, index, trend }: { icon: any; label: string; value: string | number; index: number, trend?: string }) => (
   <motion.div
@@ -151,68 +159,103 @@ const TeacherDashboard = () => {
           </div>
         </motion.div>
 
-        {/* Recent Activity sidebar */}
+        {/* Expand Your Reach Promo */}
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.5 }}
-          className="space-y-6"
+          className="flex flex-col h-full"
         >
-          <div className="flex items-center justify-between border-b border-border pb-4">
-            <h2 className="text-2xl font-black text-foreground tracking-tight">Recent Activity</h2>
-          </div>
-
-          <div className="space-y-4">
-            {enrollmentsLoading ? (
-              [...Array(4)].map((_, i) => <Skeleton key={i} className="h-24 w-full rounded-2xl" />)
-            ) : enrollments && enrollments.length > 0 ? (
-              enrollments.slice(0, 5).map((e, idx) => (
-                <motion.div
-                  key={e.id}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.6 + (idx * 0.05) }}
-                  className="flex flex-col gap-3 p-4 rounded-2xl border border-border bg-card hover:border-accent/30 hover:shadow-sm transition-all duration-300"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-full bg-accent/10 flex items-center justify-center text-accent font-black text-xs shrink-0">
-                      {e.student_details?.first_name?.[0]}{e.student_details?.last_name?.[0]}
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="font-bold text-foreground text-sm truncate leading-tight">
-                        {e.student_details?.first_name} {e.student_details?.last_name}
-                      </p>
-                      <p className="text-[10px] text-muted-foreground font-medium">
-                        {formatDistanceToNow(new Date(e.enrolled_at), { addSuffix: true })}
-                      </p>
-                    </div>
-                  </div>
-                  <div className="bg-muted px-3 py-2 rounded-xl">
-                    <p className="text-[10px] text-muted-foreground uppercase font-black opacity-60 tracking-wider mb-0.5">Joined Course</p>
-                    <p className="text-xs font-bold text-accent truncate">{e.course_details?.title}</p>
-                  </div>
-                </motion.div>
-              ))
-            ) : (
-              <div className="p-8 text-center bg-muted/20 rounded-2xl border border-dashed border-border">
-                <GraduationCap className="h-10 w-10 text-muted-foreground mx-auto mb-3 opacity-30" />
-                <p className="text-sm text-muted-foreground font-medium">No recent enrollments detected.</p>
-              </div>
-            )}
-          </div>
-
-          <Link to="/app/teacher/all-courses">
-            <div className="group mt-6 p-6 rounded-[2rem] bg-accent text-accent-foreground shadow-lg overflow-hidden relative cursor-pointer active:scale-[0.98] transition-all">
-              <GraduationCap className="absolute -bottom-4 -right-4 h-32 w-32 opacity-20 rotate-12 group-hover:scale-110 transition-transform duration-500" />
-              <h3 className="text-xl font-black mb-1 relative z-10">Expand Your Reach</h3>
-              <p className="text-sm opacity-80 mb-6 relative z-10 font-medium tracking-tight leading-snug">Reach more students by browsing school-wide courses.</p>
-              <div className="bg-white/20 hover:bg-white/30 p-2 rounded-full w-fit relative z-10 transition-colors">
-                <ArrowRight className="h-5 w-5" />
+          <Link to="/app/teacher/all-courses" className="h-full">
+            <div className="group h-full p-8 rounded-[2.5rem] bg-accent text-accent-foreground shadow-lg overflow-hidden relative cursor-pointer active:scale-[0.98] transition-all flex flex-col justify-end min-h-[320px]">
+              <GraduationCap className="absolute -top-6 -right-6 h-48 w-48 opacity-20 -rotate-12 group-hover:scale-110 group-hover:rotate-0 transition-all duration-700" />
+              <div className="relative z-10">
+                <h3 className="text-3xl font-black mb-3 leading-tight">Expand Your Reach</h3>
+                <p className="text-base opacity-90 mb-8 font-medium tracking-tight leading-relaxed">
+                  Collaborate across departments and reach more students by browsing school-wide courses.
+                </p>
+                <div className="bg-white text-accent p-3 rounded-full w-fit shadow-xl group-hover:translate-x-2 transition-transform">
+                  <ArrowRight className="h-6 w-6" />
+                </div>
               </div>
             </div>
           </Link>
         </motion.div>
       </div>
+
+      {/* Recent Activity Table Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6 }}
+        className="space-y-6"
+      >
+        <div className="flex items-center justify-between border-b border-border pb-4">
+          <h2 className="text-2xl font-black text-foreground tracking-tight">Recent Activity Log</h2>
+          <span className="text-xs font-black bg-muted px-3 py-1 rounded-full uppercase tracking-widest opacity-60">Real-time Feed</span>
+        </div>
+
+        <div className="rounded-3xl border border-border bg-card overflow-hidden shadow-xl">
+          {enrollmentsLoading ? (
+            <div className="p-8 space-y-4">
+              {[...Array(5)].map((_, i) => <Skeleton key={i} className="h-12 w-full rounded-xl" />)}
+            </div>
+          ) : enrollments && enrollments.length > 0 ? (
+            <Table>
+              <TableHeader className="bg-muted/50">
+                <TableRow className="hover:bg-transparent border-b">
+                  <TableHead className="py-5 pl-8 font-black uppercase text-[10px] tracking-widest">Student</TableHead>
+                  <TableHead className="py-5 font-black uppercase text-[10px] tracking-widest">Action</TableHead>
+                  <TableHead className="py-5 font-black uppercase text-[10px] tracking-widest">Course Title</TableHead>
+                  <TableHead className="py-5 pr-8 text-right font-black uppercase text-[10px] tracking-widest">Timestamp</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {enrollments.slice(0, 8).map((e, idx) => (
+                  <motion.tr
+                    key={e.id}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.7 + (idx * 0.05) }}
+                    className="group hover:bg-muted/30 transition-colors border-b last:border-0"
+                  >
+                    <TableCell className="py-4 pl-8">
+                      <div className="flex items-center gap-3">
+                        <div className="h-9 w-9 rounded-full bg-accent/10 flex items-center justify-center text-accent font-bold text-xs">
+                          {e.student_details?.first_name?.[0]}{e.student_details?.last_name?.[0]}
+                        </div>
+                        <span className="font-bold text-sm">{e.student_details?.first_name} {e.student_details?.last_name}</span>
+                      </div>
+                    </TableCell>
+                    <TableCell className="py-4">
+                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-green-500/10 text-green-600">
+                        Enrollment
+                      </span>
+                    </TableCell>
+                    <TableCell className="py-4">
+                      <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                        {e.course_details?.title}
+                      </span>
+                    </TableCell>
+                    <TableCell className="py-4 pr-8 text-right">
+                      <span className="text-xs font-medium text-muted-foreground flex items-center justify-end gap-2">
+                        <Clock className="h-3 w-3" />
+                        {formatDistanceToNow(new Date(e.enrolled_at), { addSuffix: true })}
+                      </span>
+                    </TableCell>
+                  </motion.tr>
+                ))}
+              </TableBody>
+            </Table>
+          ) : (
+            <div className="p-20 text-center">
+              <GraduationCap className="h-16 w-16 text-muted-foreground mx-auto mb-6 opacity-20" />
+              <h3 className="text-xl font-bold text-muted-foreground">No recent enrollment activity detected.</h3>
+              <p className="text-sm text-muted-foreground mt-2">When students join your courses, they will appear here in real-time.</p>
+            </div>
+          )}
+        </div>
+      </motion.div>
     </div>
   );
 };
