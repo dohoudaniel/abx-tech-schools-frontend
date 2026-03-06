@@ -96,6 +96,8 @@ export default apiClient;
 export const loginApi = (email: string, password: string) =>
   apiClient.post('/api/auth/login/', { email, password });
 
+export const fetchMe = () => apiClient.get('/api/auth/me/');
+
 // Courses
 export const fetchCourses = () => apiClient.get('/api/courses/');
 export const createCourse = (data: { title: string; description?: string }) =>
