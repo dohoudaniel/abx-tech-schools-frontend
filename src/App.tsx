@@ -73,7 +73,9 @@ const App = () => (
                   {/* Shared */}
                   <Route path="/app/teachers" element={<TeachersPage />} />
                   <Route path="/app/students" element={<StudentsPage />} />
-                  <Route path="/app/parents" element={<ParentsPage />} />
+                  <Route element={<ProtectedRoute allowedRoles={['teacher', 'admin']} />}>
+                    <Route path="/app/parents" element={<ParentsPage />} />
+                  </Route>
                   <Route path="/app/settings" element={<SettingsPage />} />
                 </Route>
               </Route>

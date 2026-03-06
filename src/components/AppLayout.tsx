@@ -34,7 +34,15 @@ const AppLayout = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const roleNav = (role === 'teacher' || role === 'admin') ? teacherNav : studentNav;
-  const allNav = [...roleNav, ...sharedNav];
+
+  // Filtering shared nav based on role requirements:
+  // - Students should NOT see Parents
+  const filteredSharedNav = sharedNav.filter(item => {
+    if (role === 'student' && item.to === '/app/parents') return false;
+    return true;
+  });
+
+  const allNav = [...roleNav, ...filteredSharedNav];
 
   const handleLogout = () => {
     logout();
@@ -51,8 +59,8 @@ const AppLayout = () => {
             to={item.to}
             onClick={() => setMobileOpen(false)}
             className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${active
-                ? 'bg-accent/10 text-accent'
-                : 'text-foreground/70 hover:bg-muted hover:text-foreground'
+              ? 'bg-accent/10 text-accent'
+              : 'text-foreground/70 hover:bg-muted hover:text-foreground'
               }`}
           >
             <item.icon className="h-4 w-4" />
