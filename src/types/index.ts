@@ -4,6 +4,10 @@ export interface User {
   first_name?: string;
   last_name?: string;
   role?: 'teacher' | 'student' | 'admin' | 'parent';
+  profile_data?: {
+    gender?: string;
+    date_of_birth?: string;
+  };
 }
 
 export interface Teacher {

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 import { useFetchMe } from '@/hooks/useDataHooks';
 import { motion } from 'framer-motion';
-import { User, Mail, Shield, LogOut, RefreshCw, BadgeCheck } from 'lucide-react';
+import { User, Mail, Shield, LogOut, RefreshCw, BadgeCheck, Calendar, Cake } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const SettingsPage = () => {
@@ -110,6 +110,22 @@ const SettingsPage = () => {
                   </p>
                   <p className="text-foreground capitalize">{userData?.role || '—'}</p>
                 </div>
+                {userData?.profile_data?.gender && (
+                  <div className="space-y-1.5">
+                    <p className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                      <User className="h-3.5 w-3.5" /> Gender
+                    </p>
+                    <p className="text-foreground">{userData.profile_data.gender}</p>
+                  </div>
+                )}
+                {userData?.profile_data?.date_of_birth && (
+                  <div className="space-y-1.5">
+                    <p className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                      <Cake className="h-3.5 w-3.5" /> Date of Birth
+                    </p>
+                    <p className="text-foreground">{new Date(userData.profile_data.date_of_birth).toLocaleDateString(undefined, { dateStyle: 'long' })}</p>
+                  </div>
+                )}
               </div>
 
               <hr className="border-border" />
