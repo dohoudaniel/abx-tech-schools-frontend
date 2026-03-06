@@ -24,19 +24,24 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const token = getAccessToken();
     if (token) {
       setAccessToken(token);
-      // Decode JWT payload for basic user info
-      try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        setUser({
-          id: payload.user_id,
-          email: payload.email || '',
-        });
-        // We might want to store the role in the token too if we customized simplegwt, 
-        // but for now we also receive it in login data. Let's check localStorage for role first.
-        const savedRole = localStorage.getItem('abx_role') as any;
-        if (savedRole) setRole(savedRole);
-      } catch {
-        // Token invalid
+      // Load user and role from localStorage if available, fallback to basic JWT payload
+      const savedUser = localStorage.getItem('abx_user');
+      const savedRole = localStorage.getItem('abx_role') as any;
+
+      if (savedUser) {
+        try {
+          setUser(JSON.parse(savedUser));
+          if (savedRole) setRole(savedRole);
+        } catch {
+          // Fallback if JSON is malformed
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          setUser({ id: payload.user_id, email: payload.email || '' });
+        }
+      } else {
+        try {
+          const payload = JSON.parse(atob(token.split('.')[1]));
+          setUser({ id: payload.user_id, email: payload.email || '' });
+        } catch { /* Invalid token */ }
       }
     }
     setIsLoading(false);
@@ -50,12 +55,14 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (data.user) {
       setUser(data.user);
       setRole(data.user.role);
+      localStorage.setItem('abx_user', JSON.stringify(data.user));
       localStorage.setItem('abx_role', data.user.role);
     }
   }, []);
 
   const logout = useCallback(() => {
     clearTokens();
+    localStorage.removeItem('abx_user');
     localStorage.removeItem('abx_role');
     setUser(null);
     setRole(null);

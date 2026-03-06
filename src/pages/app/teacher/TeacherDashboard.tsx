@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { BookOpen, Users, TrendingUp } from 'lucide-react';
-import { useFetchCourses, useFetchStudents } from '@/hooks/useDataHooks';
+import { useFetchCourses, useFetchStudents, useFetchMe } from '@/hooks/useDataHooks';
 import { useAuth } from '@/lib/auth';
 import { getGreeting } from '@/lib/utils';
 
@@ -22,12 +22,16 @@ const StatCard = ({ icon: Icon, label, value, index }: { icon: any; label: strin
 const TeacherDashboard = () => {
   const { data: courses } = useFetchCourses();
   const { data: students } = useFetchStudents();
-  const { user } = useAuth();
+  const { data: freshUser } = useFetchMe();
+  const { user: authUser } = useAuth();
   const greeting = getGreeting();
 
   const capitalize = (s: string) => s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : '';
-  const firstNameRaw = user?.first_name || user?.email?.split('.')[0] || 'Teacher';
-  const firstName = capitalize(firstNameRaw);
+  const user = freshUser || authUser;
+
+  const firstName = capitalize(user?.first_name || '');
+  const lastName = capitalize(user?.last_name || '');
+  const fullName = firstName && lastName ? `${firstName} ${lastName}` : firstName || user?.email?.split('.')[0] || 'Teacher';
 
   return (
     <div className="space-y-8">
@@ -37,7 +41,7 @@ const TeacherDashboard = () => {
           animate={{ opacity: 1, x: 0 }}
         >
           <h1 className="text-3xl md:text-4xl font-bold text-foreground">
-            {greeting}, <span className="text-accent">{firstName}!</span>
+            {greeting}, <span className="text-accent">{fullName}!</span>
           </h1>
           <p className="text-muted-foreground mt-2">
             Here's an overview of your academic performance and school statistics.

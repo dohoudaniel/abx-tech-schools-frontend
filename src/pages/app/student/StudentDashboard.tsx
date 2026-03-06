@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { BookOpen, ClipboardList, GraduationCap, TrendingUp, ArrowRight } from 'lucide-react';
-import { useFetchEnrollments, useFetchCourses } from '@/hooks/useDataHooks';
+import { useFetchEnrollments, useFetchCourses, useFetchMe } from '@/hooks/useDataHooks';
 import { useAuth } from '@/lib/auth';
 import { getGreeting } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -9,12 +9,16 @@ import { Link } from 'react-router-dom';
 const StudentDashboard = () => {
   const { data: enrollments } = useFetchEnrollments();
   const { data: allCourses } = useFetchCourses();
-  const { user } = useAuth();
+  const { data: freshUser } = useFetchMe();
+  const { user: authUser } = useAuth();
   const greeting = getGreeting();
 
   const capitalize = (s: string) => s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : '';
-  const firstNameRaw = user?.first_name || user?.email?.split('.')[0] || 'Student';
-  const firstName = capitalize(firstNameRaw);
+  const user = freshUser || authUser;
+
+  const firstName = capitalize(user?.first_name || '');
+  const lastName = capitalize(user?.last_name || '');
+  const fullName = firstName && lastName ? `${firstName} ${lastName}` : firstName || user?.email?.split('.')[0] || 'Student';
 
   return (
     <div className="space-y-8">
@@ -26,7 +30,7 @@ const StudentDashboard = () => {
           className="mb-2"
         >
           <h1 className="text-3xl md:text-4xl font-bold text-foreground">
-            {greeting}, <span className="text-accent">{firstName}!</span>
+            {greeting}, <span className="text-accent">{fullName}!</span>
           </h1>
           <p className="text-muted-foreground mt-2">
             Welcome back to your learning dashboard. Here's what's happening today.
