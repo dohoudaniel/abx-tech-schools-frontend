@@ -61,3 +61,23 @@ export interface ApiError {
   message?: string;
   [key: string]: unknown;
 }
+export interface Parent {
+  id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  gender?: string;
+  family_last_name?: string;
+  created_at: string;
+  students_details?: Student[];
+  student_links?: ParentStudent[];
+}
+
+export interface ParentStudent {
+  id: number;
+  parent: number;
+  student: number;
+  student_details?: Student;
+  relationship?: string;
+  linked_at: string;
+}

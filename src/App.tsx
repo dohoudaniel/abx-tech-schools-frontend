@@ -24,6 +24,7 @@ const StudentEnrollments = lazy(() => import("@/pages/app/student/StudentEnrollm
 const TeachersPage = lazy(() => import("@/pages/app/teachers/TeachersPage"));
 const StudentsPage = lazy(() => import("@/pages/app/students/StudentsPage"));
 const ParentsPage = lazy(() => import("@/pages/app/parents/ParentsPage"));
+const ParentDashboard = lazy(() => import("@/pages/app/parent/ParentDashboard"));
 const SettingsPage = lazy(() => import("@/pages/app/SettingsPage"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
@@ -71,6 +72,12 @@ const App = () => (
                     <Route path="/app/student/courses" element={<StudentCourses />} />
                     <Route path="/app/student/enrollments" element={<StudentEnrollments />} />
                   </Route>
+
+                  {/* Parent - Restricted */}
+                  <Route element={<ProtectedRoute allowedRoles={['parent', 'admin']} />}>
+                    <Route path="/app/parent" element={<ParentDashboard />} />
+                  </Route>
+
 
                   {/* Shared */}
                   <Route path="/app/teachers" element={<TeachersPage />} />

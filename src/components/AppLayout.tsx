@@ -21,6 +21,10 @@ const studentNav = [
   { to: '/app/student/enrollments', label: 'My Enrollments', icon: ClipboardList },
 ];
 
+const parentNav = [
+  { to: '/app/parent', label: 'Dashboard', icon: LayoutDashboard },
+];
+
 const sharedNav = [
   { to: '/app/teachers', label: 'Teachers', icon: UserCheck },
   { to: '/app/students', label: 'Students', icon: GraduationCap },
@@ -34,14 +38,22 @@ const AppLayout = () => {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const roleNav = (role === 'teacher' || role === 'admin') ? teacherNav : studentNav;
+  const getRoleNav = () => {
+    if (role === 'teacher' || role === 'admin') return teacherNav;
+    if (role === 'student') return studentNav;
+    if (role === 'parent') return parentNav;
+    return [];
+  };
+
+  const roleNav = getRoleNav();
 
   // Filtering shared nav based on role requirements:
-  // - Students should NOT see Parents
+  // - Students and Parents should NOT see the global Parents list (meant for teachers/admin)
   const filteredSharedNav = sharedNav.filter(item => {
-    if (role === 'student' && item.to === '/app/parents') return false;
+    if ((role === 'student' || role === 'parent') && item.to === '/app/parents') return false;
     return true;
   });
+
 
   const allNav = [...roleNav, ...filteredSharedNav];
 

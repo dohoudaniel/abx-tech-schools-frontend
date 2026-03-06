@@ -3,8 +3,9 @@ import {
   fetchCourses, fetchMyCourses, fetchCourse, fetchEnrollments, fetchTeachers, fetchStudents,
   createCourse, createEnrollment, deleteEnrollment, fetchCourseStudents,
   fetchMe, fetchMyStudents,
+  fetchParents, fetchParentLinks,
 } from '@/lib/api';
-import type { Course, Enrollment, Teacher, Student, User } from '@/types';
+import type { Course, Enrollment, Teacher, Student, User, Parent, ParentStudent } from '@/types';
 
 export const useFetchMe = () =>
   useQuery<User>({
@@ -53,6 +54,18 @@ export const useFetchStudents = () =>
   useQuery<Student[]>({
     queryKey: ['students'],
     queryFn: async () => (await fetchStudents()).data,
+  });
+
+export const useFetchParents = () =>
+  useQuery<Parent[]>({
+    queryKey: ['parents'],
+    queryFn: async () => (await fetchParents()).data,
+  });
+
+export const useFetchParentLinks = () =>
+  useQuery<ParentStudent[]>({
+    queryKey: ['parentLinks'],
+    queryFn: async () => (await fetchParentLinks()).data,
   });
 
 export const useFetchCourseStudents = (courseId: number) =>

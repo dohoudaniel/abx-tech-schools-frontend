@@ -4,7 +4,7 @@ import type { User } from '@/types';
 
 interface AuthContextType {
   user: User | null;
-  role: 'teacher' | 'student' | 'admin' | null;
+  role: 'teacher' | 'student' | 'admin' | 'parent' | null;
   accessToken: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
@@ -16,7 +16,7 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [role, setRole] = useState<'teacher' | 'student' | 'admin' | null>(null);
+  const [role, setRole] = useState<'teacher' | 'student' | 'admin' | 'parent' | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(getAccessToken());
   const [isLoading, setIsLoading] = useState(true);
 

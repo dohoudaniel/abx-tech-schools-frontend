@@ -122,3 +122,7 @@ export const fetchMyStudents = () => apiClient.get('/api/teachers/my-students/')
 export const fetchTeacher = (id: number) => apiClient.get(`/api/teachers/${id}/`);
 export const fetchStudents = () => apiClient.get('/api/students/');
 export const fetchStudent = (id: number) => apiClient.get(`/api/students/${id}/`);
+
+// Parents
+export const fetchParents = () => apiClient.get('/api/parents/');
+export const fetchParentLinks = () => apiClient.get('/api/parents/links/');

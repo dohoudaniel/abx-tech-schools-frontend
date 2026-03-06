@@ -6,6 +6,7 @@ const AppIndex = () => {
 
   if (role === 'teacher') return <Navigate to="/app/teacher" replace />;
   if (role === 'student') return <Navigate to="/app/student" replace />;
+  if (role === 'parent') return <Navigate to="/app/parent" replace />;
   if (role === 'admin') return <Navigate to="/app/teacher" replace />; // Admin can act as teacher for now
 
   return <Navigate to="/auth/login" replace />;
