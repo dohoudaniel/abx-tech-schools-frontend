@@ -1,11 +1,11 @@
-import { useFetchCourses } from '@/hooks/useDataHooks';
+import { useFetchMyCourses } from '@/hooks/useDataHooks';
 import CourseCard from '@/components/CourseCard';
 import CreateCourseModal from '@/components/CreateCourseModal';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Link } from 'react-router-dom';
 
 const TeacherCourses = () => {
-  const { data: courses, isLoading } = useFetchCourses();
+  const { data: courses, isLoading } = useFetchMyCourses();
 
   return (
     <div>
@@ -19,7 +19,7 @@ const TeacherCourses = () => {
         </div>
       ) : !courses?.length ? (
         <div className="text-center py-16">
-          <p className="text-muted-foreground mb-4">No courses yet. Create your first course!</p>
+          <p className="text-muted-foreground mb-4">You haven't created any courses yet. Start your teaching journey today!</p>
           <CreateCourseModal />
         </div>
       ) : (

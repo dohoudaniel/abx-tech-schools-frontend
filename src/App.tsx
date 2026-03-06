@@ -15,6 +15,7 @@ const Login = lazy(() => import("@/pages/auth/Login"));
 const AppIndex = lazy(() => import("@/pages/app/AppIndex"));
 const TeacherDashboard = lazy(() => import("@/pages/app/teacher/TeacherDashboard"));
 const TeacherCourses = lazy(() => import("@/pages/app/teacher/TeacherCourses"));
+const AllCourses = lazy(() => import("@/pages/app/teacher/AllCourses"));
 const CourseDetail = lazy(() => import("@/pages/app/teacher/CourseDetail"));
 const TeacherStudents = lazy(() => import("@/pages/app/teacher/TeacherStudents"));
 const StudentDashboard = lazy(() => import("@/pages/app/student/StudentDashboard"));
@@ -59,6 +60,7 @@ const App = () => (
                   <Route element={<ProtectedRoute allowedRoles={['teacher', 'admin']} />}>
                     <Route path="/app/teacher" element={<TeacherDashboard />} />
                     <Route path="/app/teacher/courses" element={<TeacherCourses />} />
+                    <Route path="/app/teacher/all-courses" element={<AllCourses />} />
                     <Route path="/app/teacher/courses/:id" element={<CourseDetail />} />
                     <Route path="/app/teacher/students" element={<TeacherStudents />} />
                   </Route>

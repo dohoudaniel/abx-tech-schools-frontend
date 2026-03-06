@@ -100,6 +100,7 @@ export const fetchMe = () => apiClient.get('/api/auth/me/');
 
 // Courses
 export const fetchCourses = () => apiClient.get('/api/courses/');
+export const fetchMyCourses = () => apiClient.get('/api/courses/my-courses/');
 export const createCourse = (data: { title: string; description?: string }) =>
   apiClient.post('/api/courses/', data);
 export const patchCourse = (id: number, data: Partial<{ title: string; description: string }>) =>
