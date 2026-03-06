@@ -69,7 +69,7 @@ const TeacherDashboard = () => {
             <p className="text-xs font-black uppercase tracking-[0.2em] text-accent">Teacher Access</p>
           </div>
           <h1 className="text-4xl md:text-5xl font-black text-foreground tracking-tighter leading-none mb-4">
-            {greeting}, <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent to-primary">{fullName}!</span>
+            {greeting}, <br /> <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent to-primary">{fullName}!</span>
           </h1>
           <p className="text-lg text-muted-foreground max-w-xl font-medium">
             Here's an overview of your classroom's academic performance and school statistics.
@@ -86,7 +86,7 @@ const TeacherDashboard = () => {
           </div>
           <div>
             <p className="text-xs font-bold text-muted-foreground uppercase opacity-70">Current Session</p>
-            <p className="text-sm font-black">2023 / 2024 Academic Year</p>
+            <p className="text-sm font-black">2025 / 2026 Academic Year</p>
           </div>
         </motion.div>
       </section>
