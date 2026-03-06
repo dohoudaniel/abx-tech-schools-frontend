@@ -1,5 +1,7 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useAuth } from '@/lib/auth';
 import Logo from '@/components/Logo';
 import { Button } from '@/components/ui/button';
 import { useInView } from '@/hooks/useInView';
@@ -13,7 +15,15 @@ const features = [
 ];
 
 const Landing = () => {
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
   const featuresSection = useInView();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/app', { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   return (
     <div className="min-h-screen bg-background">

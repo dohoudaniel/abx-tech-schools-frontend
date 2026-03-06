@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import logoSrc from '@/assets/logo.jpeg';
 
 interface LogoProps {
@@ -9,7 +10,7 @@ interface LogoProps {
 const sizes = { sm: 'h-8 w-8', md: 'h-12 w-12', lg: 'h-20 w-20' };
 
 const Logo = ({ className = '', size = 'md', showText = true }: LogoProps) => (
-  <div className={`flex items-center gap-3 ${className}`}>
+  <Link to="/" className={`flex items-center gap-3 hover:opacity-90 transition-opacity ${className}`}>
     <img
       src={logoSrc}
       alt="ABX Tech Schools logo"
@@ -20,7 +21,7 @@ const Logo = ({ className = '', size = 'md', showText = true }: LogoProps) => (
         ABX Tech Schools
       </span>
     )}
-  </div>
+  </Link>
 );
 
 export default Logo;

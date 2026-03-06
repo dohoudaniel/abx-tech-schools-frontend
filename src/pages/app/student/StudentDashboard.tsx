@@ -12,7 +12,9 @@ const StudentDashboard = () => {
   const { user } = useAuth();
   const greeting = getGreeting();
 
-  const firstName = user?.first_name || user?.email?.split('.')[0] || 'Student';
+  const capitalize = (s: string) => s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : '';
+  const firstNameRaw = user?.first_name || user?.email?.split('.')[0] || 'Student';
+  const firstName = capitalize(firstNameRaw);
 
   return (
     <div className="space-y-8">
