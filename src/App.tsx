@@ -25,6 +25,7 @@ const TeachersPage = lazy(() => import("@/pages/app/teachers/TeachersPage"));
 const StudentsPage = lazy(() => import("@/pages/app/students/StudentsPage"));
 const ParentsPage = lazy(() => import("@/pages/app/parents/ParentsPage"));
 const ParentDashboard = lazy(() => import("@/pages/app/parent/ParentDashboard"));
+const ParentProgress = lazy(() => import("@/pages/app/parent/ParentProgress"));
 const SettingsPage = lazy(() => import("@/pages/app/SettingsPage"));
 const NotFound = lazy(() => import("@/pages/NotFound"));
 
@@ -76,7 +77,9 @@ const App = () => (
                   {/* Parent - Restricted */}
                   <Route element={<ProtectedRoute allowedRoles={['parent', 'admin']} />}>
                     <Route path="/app/parent" element={<ParentDashboard />} />
+                    <Route path="/app/parent/progress" element={<ParentProgress />} />
                   </Route>
+
 
 
                   {/* Shared */}

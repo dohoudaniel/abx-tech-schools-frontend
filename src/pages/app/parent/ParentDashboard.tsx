@@ -1,15 +1,18 @@
 import { useAuth } from '@/lib/auth';
-import { useFetchParents } from '@/hooks/useDataHooks';
+import { useFetchParents, useFetchEnrollments } from '@/hooks/useDataHooks';
 import { motion } from 'framer-motion';
-import { Users, GraduationCap, Calendar, Heart } from 'lucide-react';
+import { Users, GraduationCap, Calendar, Heart, BookOpen } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
 
 const ParentDashboard = () => {
     const { user } = useAuth();
-    const { data: parents, isLoading } = useFetchParents();
+    const { data: parents, isLoading: isParentLoading } = useFetchParents();
+    const { data: enrollments, isLoading: isEnrollmentLoading } = useFetchEnrollments();
 
     // Since useFetchParents lists parents and parents see only themselves
     const parentProfile = parents?.[0];
+
+    const isLoading = isParentLoading || isEnrollmentLoading;
 
     return (
         <div className="max-w-5xl mx-auto space-y-8">
@@ -51,57 +54,75 @@ const ParentDashboard = () => {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        {parentProfile.students_details.map((student, i) => (
-                            <motion.div
-                                key={student.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: i * 0.1 }}
-                                className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-sm hover:shadow-md transition-all"
-                            >
-                                <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
-                                    <GraduationCap size={80} />
-                                </div>
+                        {parentProfile.students_details.map((student, i) => {
+                            const childEnrollments = enrollments?.filter(e => e.student === student.id) || [];
 
-                                <div className="flex items-start gap-4 mb-4">
-                                    <div className="h-14 w-14 rounded-full bg-accent/10 flex items-center justify-center text-accent font-bold text-xl">
-                                        {student.first_name[0]}{student.last_name[0]}
+                            return (
+                                <motion.div
+                                    key={student.id}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: i * 0.1 }}
+                                    className="group relative overflow-hidden rounded-2xl border border-border bg-card p-6 shadow-sm hover:shadow-md transition-all"
+                                >
+                                    <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                                        <GraduationCap size={80} />
                                     </div>
-                                    <div>
-                                        <h3 className="text-lg font-bold text-foreground">
-                                            {student.first_name} {student.last_name}
-                                        </h3>
-                                        <p className="text-sm text-muted-foreground">{student.email}</p>
-                                    </div>
-                                </div>
 
-                                <div className="space-y-3">
-                                    <div className="flex items-center justify-between text-sm py-2 border-t border-border/50">
-                                        <span className="text-muted-foreground">Relationship</span>
-                                        <span className="font-semibold text-foreground capitalize">
-                                            {parentProfile.student_links?.find(l => l.student === student.id)?.relationship || 'Child'}
-                                        </span>
+                                    <div className="flex items-start gap-4 mb-4">
+                                        <div className="h-14 w-14 rounded-full bg-accent/10 flex items-center justify-center text-accent font-bold text-xl">
+                                            {student.first_name[0]}{student.last_name[0]}
+                                        </div>
+                                        <div>
+                                            <h3 className="text-lg font-bold text-foreground">
+                                                {student.first_name} {student.last_name}
+                                            </h3>
+                                            <p className="text-sm text-muted-foreground">{student.email}</p>
+                                        </div>
                                     </div>
-                                    <div className="flex items-center justify-between text-sm py-2 border-t border-border/50">
-                                        <span className="text-muted-foreground">Performance</span>
-                                        <span className="px-2 py-0.5 bg-green-500/10 text-green-500 rounded text-xs font-bold uppercase tracking-wider">
-                                            Optimal
-                                        </span>
-                                    </div>
-                                </div>
 
-                                <div className="mt-4 pt-4 border-t border-border/50 grid grid-cols-2 gap-3">
-                                    <div className="p-3 bg-muted/30 rounded-xl text-center">
-                                        <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold mb-1">Attendance</p>
-                                        <p className="text-lg font-bold text-foreground">94%</p>
+                                    <div className="space-y-3">
+                                        <div className="flex items-center justify-between text-sm py-2 border-t border-border/50">
+                                            <span className="text-muted-foreground">Relationship</span>
+                                            <span className="font-semibold text-foreground capitalize">
+                                                {parentProfile.student_links?.find(l => l.student === student.id)?.relationship || 'Child'}
+                                            </span>
+                                        </div>
+
+                                        {/* Enrollments Preview */}
+                                        <div className="py-2 border-t border-border/50">
+                                            <p className="text-xs font-bold text-muted-foreground uppercase tracking-widest mb-2 flex items-center gap-1">
+                                                <BookOpen size={10} /> Active Courses
+                                            </p>
+                                            <div className="flex flex-wrap gap-1.5">
+                                                {childEnrollments.slice(0, 3).map(enr => (
+                                                    <span key={enr.id} className="px-2 py-0.5 bg-muted rounded text-[10px] font-medium">
+                                                        {enr.course_details?.title}
+                                                    </span>
+                                                ))}
+                                                {childEnrollments.length > 3 && (
+                                                    <span className="text-[10px] text-muted-foreground font-medium">+{childEnrollments.length - 3} more</span>
+                                                )}
+                                                {childEnrollments.length === 0 && (
+                                                    <span className="text-[10px] italic text-muted-foreground">Not enrolled in any courses</span>
+                                                )}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="p-3 bg-muted/30 rounded-xl text-center">
-                                        <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold mb-1">Courses</p>
-                                        <p className="text-lg font-bold text-foreground">5</p>
+
+                                    <div className="mt-4 pt-4 border-t border-border/50 grid grid-cols-2 gap-3">
+                                        <div className="p-3 bg-muted/30 rounded-xl text-center">
+                                            <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold mb-1">Attendance</p>
+                                            <p className="text-lg font-bold text-foreground">94%</p>
+                                        </div>
+                                        <div className="p-3 bg-muted/30 rounded-xl text-center">
+                                            <p className="text-[10px] uppercase tracking-wider text-muted-foreground font-bold mb-1">Total GPA</p>
+                                            <p className="text-lg font-bold text-foreground">3.8</p>
+                                        </div>
                                     </div>
-                                </div>
-                            </motion.div>
-                        ))}
+                                </motion.div>
+                            );
+                        })}
                     </div>
                 )}
             </div>

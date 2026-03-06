@@ -5,7 +5,7 @@ import Logo from '@/components/Logo';
 import { Button } from '@/components/ui/button';
 import {
   BookOpen, Users, GraduationCap, Settings, LogOut, Menu, X,
-  LayoutDashboard, UserCheck, ClipboardList
+  LayoutDashboard, UserCheck, ClipboardList, TrendingUp
 } from 'lucide-react';
 
 const teacherNav = [
@@ -23,7 +23,9 @@ const studentNav = [
 
 const parentNav = [
   { to: '/app/parent', label: 'Dashboard', icon: LayoutDashboard },
+  { to: '/app/parent/progress', label: 'Progress', icon: TrendingUp },
 ];
+
 
 const sharedNav = [
   { to: '/app/teachers', label: 'Teachers', icon: UserCheck },
