@@ -1,73 +1,78 @@
-# Welcome to your Lovable project
+# ABX Tech Schools - Frontend
 
-## Project info
+A modern, high-performance School Management System frontend built for students and teachers. Featuring a premium design, role-based access control, and seamless integration with the ABX Schools Backend.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## 🚀 Features
 
-## How can I edit this code?
+### 🎓 For Students
+- **Personalized Dashboard**: Time-based greetings and overview of learning progress.
+- **Course Catalog**: Browse courses with advanced search, filtering, and subject categories.
+- **Learning Journey**: Track enrollments, progress, and continue learning from where you left off.
+- **Premium UI**: Smooth animations, glassmorphism effects, and an engaging interface.
 
-There are several ways of editing your application.
+### 👨‍🏫 For Teachers
+- **Insightful Dashboard**: Monitor total courses, students, and engagement metrics.
+- **Classroom Management**: Manage course content and track student performance.
+- **Student Overview**: View detailed information about enrolled students.
 
-**Use Lovable**
+### 🛠️ Core Functionality
+- **Role-Based Routing**: Secure access ensures students and teachers only see relevant pages.
+- **Auto-Redirects**: Authenticated users are automatically redirected from the landing page to their respective dashboards.
+- **Persistent State**: User profile information (including full name and preferences) is persisted across sessions.
+- **Custom 404 Experience**: An immersive, animated error page with a 10-second automatic teleportation back to safety.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## 🛠️ Technology Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+- **Framework**: React 18 with Vite
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Components**: shadcn/ui
+- **Animations**: Framer Motion
+- **Data Fetching**: TanStack Query (React Query)
+- **Icons**: Lucide React
 
-**Use your preferred IDE**
+## 🏁 Getting Started
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Prerequisites
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- [Node.js](https://nodejs.org/) (v18 or higher)
+- [npm](https://www.npmjs.com/)
 
-Follow these steps:
+### Installation
 
+1. **Clone the repository**:
+   ```sh
+   git clone https://github.com/dohoudaniel/abx-tech-schools-frontend.git
+   cd abx-tech-schools-frontend
+   ```
+
+2. **Install dependencies**:
+   ```sh
+   npm install
+   ```
+
+3. **Configure Environment Variables**:
+   Create a `.env` file in the root directory and point it to your backend:
+   ```env
+   VITE_API_BASE=http://localhost:8000
+   ```
+
+4. **Start the development server**:
+   ```sh
+   npm run dev
+   ```
+
+### Building for Production
+
+To create an optimized production build:
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+npm run build
 ```
 
-**Edit a file directly in GitHub**
+## 🤝 Integration
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+This frontend is designed to work perfectly with the [ABX Schools Backend](https://github.com/dohoudaniel/abx-tech-schools-backend). ensure the backend is running and the `VITE_API_BASE` is correctly configured to enable live data fetching for profile settings and academic metrics.
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Developed with ❤️ for **ABX Technologies**.
