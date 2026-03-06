@@ -12,7 +12,7 @@ const teacherNav = [
   { to: '/app/teacher', label: 'Dashboard', icon: LayoutDashboard },
   { to: '/app/teacher/courses', label: 'My Courses', icon: BookOpen },
   { to: '/app/teacher/all-courses', label: 'All Courses', icon: GraduationCap },
-  { to: '/app/teacher/students', label: 'Students', icon: Users },
+  { to: '/app/teacher/students', label: 'My Students', icon: Users },
 ];
 
 const studentNav = [
