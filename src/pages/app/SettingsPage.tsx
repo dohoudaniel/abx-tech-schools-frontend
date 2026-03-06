@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useToast } from '@/hooks/use-toast';
 
 const SettingsPage = () => {
-  const { user, role, logout, setRole } = useAuth();
+  const { user, role, logout } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -25,14 +25,6 @@ const SettingsPage = () => {
         <div>
           <p className="text-sm text-muted-foreground">Current Role</p>
           <p className="font-medium text-card-foreground capitalize">{role || 'Not set'}</p>
-        </div>
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" onClick={() => { setRole('teacher'); toast({ title: 'Role set to Teacher' }); }}>
-            Switch to Teacher
-          </Button>
-          <Button variant="outline" size="sm" onClick={() => { setRole('student'); toast({ title: 'Role set to Student' }); }}>
-            Switch to Student
-          </Button>
         </div>
         <hr className="border-border" />
         <Button variant="destructive" onClick={handleLogout}>Sign Out</Button>
