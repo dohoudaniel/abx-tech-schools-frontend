@@ -29,12 +29,6 @@ const SettingsPage = () => {
         <hr className="border-border" />
         <Button variant="destructive" onClick={handleLogout}>Sign Out</Button>
       </div>
-      <div className="mt-6 rounded-lg border border-border bg-card p-6">
-        <h2 className="font-semibold text-card-foreground mb-2">Security Note</h2>
-        <p className="text-sm text-muted-foreground">
-          Refresh tokens are stored in localStorage for this demo. For production, we recommend switching to httpOnly cookie-based refresh tokens on the backend.
-        </p>
-      </div>
     </div>
   );
 };
