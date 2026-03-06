@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { BookOpen, Users, TrendingUp } from 'lucide-react';
-import { useFetchCourses, useFetchStudents, useFetchMe } from '@/hooks/useDataHooks';
+import { useFetchCourses, useFetchMyStudents, useFetchMe } from '@/hooks/useDataHooks';
 import { useAuth } from '@/lib/auth';
 import { getGreeting } from '@/lib/utils';
 
@@ -21,7 +21,7 @@ const StatCard = ({ icon: Icon, label, value, index }: { icon: any; label: strin
 
 const TeacherDashboard = () => {
   const { data: courses } = useFetchCourses();
-  const { data: students } = useFetchStudents();
+  const { data: students } = useFetchMyStudents();
   const { data: freshUser } = useFetchMe();
   const { user: authUser } = useAuth();
   const greeting = getGreeting();
@@ -44,7 +44,7 @@ const TeacherDashboard = () => {
             {greeting}, <span className="text-accent">{fullName}!</span>
           </h1>
           <p className="text-muted-foreground mt-2">
-            Here's an overview of your academic performance and school statistics.
+            Here's an overview of your classroom's academic performance and school statistics.
           </p>
         </motion.div>
       </section>

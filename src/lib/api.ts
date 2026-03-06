@@ -116,6 +116,7 @@ export const deleteEnrollment = (id: number) =>
 
 // Teachers & Students
 export const fetchTeachers = () => apiClient.get('/api/teachers/');
+export const fetchMyStudents = () => apiClient.get('/api/teachers/my-students/');
 export const fetchTeacher = (id: number) => apiClient.get(`/api/teachers/${id}/`);
 export const fetchStudents = () => apiClient.get('/api/students/');
 export const fetchStudent = (id: number) => apiClient.get(`/api/students/${id}/`);

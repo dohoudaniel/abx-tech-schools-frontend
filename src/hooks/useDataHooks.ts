@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   fetchCourses, fetchEnrollments, fetchTeachers, fetchStudents,
   createCourse, createEnrollment, deleteEnrollment, fetchCourseStudents,
-  fetchMe,
+  fetchMe, fetchMyStudents,
 } from '@/lib/api';
 import type { Course, Enrollment, Teacher, Student, User } from '@/types';
 
@@ -10,6 +10,12 @@ export const useFetchMe = () =>
   useQuery<User>({
     queryKey: ['me'],
     queryFn: async () => (await fetchMe()).data,
+  });
+
+export const useFetchMyStudents = () =>
+  useQuery<Student[]>({
+    queryKey: ['myStudents'],
+    queryFn: async () => (await fetchMyStudents()).data,
   });
 
 export const useFetchCourses = () =>
