@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { BookOpen, ClipboardList, GraduationCap, TrendingUp, ArrowRight } from 'lucide-react';
+import { BookOpen, ClipboardList, GraduationCap, TrendingUp, ArrowRight, Calendar } from 'lucide-react';
 import { useFetchEnrollments, useFetchCourses, useFetchMe } from '@/hooks/useDataHooks';
 import { useAuth } from '@/lib/auth';
 import { getGreeting } from '@/lib/utils';
@@ -21,22 +21,41 @@ const StudentDashboard = () => {
   const fullName = firstName && lastName ? `${firstName} ${lastName}` : firstName || user?.email?.split('.')[0] || 'Student';
 
   return (
-    <div className="space-y-8">
-      {/* Hero Section */}
-      <section>
+    <div className="space-y-8 pb-10">
+      {/* Header Section */}
+      <section className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
+          initial={{ opacity: 0, x: -25 }}
           animate={{ opacity: 1, x: 0 }}
-          className="mb-2"
+          transition={{ duration: 0.6 }}
         >
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground">
-            {greeting}, <span className="text-accent">{fullName}!</span>
+          <div className="flex items-center gap-2 mb-1">
+            <span className="w-6 h-1 bg-accent rounded-full animate-pulse" />
+            <p className="text-[10px] font-black uppercase tracking-[0.2em] text-accent">Student Access</p>
+          </div>
+          <h1 className="text-3xl md:text-4xl font-black text-foreground tracking-tighter leading-none mb-2">
+            {greeting}, <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent to-primary">{fullName}!</span>
           </h1>
-          <p className="text-muted-foreground mt-2">
+          <p className="text-base text-muted-foreground max-w-xl font-medium">
             Welcome back to your learning dashboard. Here's what's happening today.
           </p>
         </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="bg-card border border-border p-3 rounded-2xl flex items-center gap-3 shadow-sm inline-flex"
+        >
+          <div className="bg-accent/10 p-2 rounded-xl">
+            <Calendar className="h-4 w-4 text-accent" />
+          </div>
+          <div>
+            <p className="text-[10px] font-bold text-muted-foreground uppercase opacity-70">Current Session</p>
+            <p className="text-xs font-black uppercase">2025 / 2026 Academic Year</p>
+          </div>
+        </motion.div>
       </section>
+
 
       {/* Stats Section */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

@@ -3,11 +3,18 @@ import { useFetchParents, useFetchEnrollments } from '@/hooks/useDataHooks';
 import { motion } from 'framer-motion';
 import { Users, GraduationCap, Calendar, Heart, BookOpen } from 'lucide-react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { getGreeting } from '@/lib/utils';
 
 const ParentDashboard = () => {
     const { user } = useAuth();
     const { data: parents, isLoading: isParentLoading } = useFetchParents();
     const { data: enrollments, isLoading: isEnrollmentLoading } = useFetchEnrollments();
+    const greeting = getGreeting();
+
+    const capitalize = (s: string) => s ? s.charAt(0).toUpperCase() + s.slice(1).toLowerCase() : '';
+    const firstName = capitalize(user?.first_name || '');
+    const lastName = capitalize(user?.last_name || '');
+    const fullName = firstName && lastName ? `${firstName} ${lastName}` : firstName || 'Parent';
 
     // Since useFetchParents lists parents and parents see only themselves
     const parentProfile = parents?.[0];
@@ -16,23 +23,40 @@ const ParentDashboard = () => {
 
     return (
         <div className="max-w-5xl mx-auto space-y-8">
-            {/* Header */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                <div>
-                    <h1 className="text-3xl font-bold text-foreground capitalize">
-                        Welcome, {user?.first_name || 'Parent'}!
+            {/* Header Section */}
+            <section className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <motion.div
+                    initial={{ opacity: 0, x: -25 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6 }}
+                >
+                    <div className="flex items-center gap-2 mb-1">
+                        <span className="w-6 h-1 bg-accent rounded-full animate-pulse" />
+                        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-accent">Parent Access</p>
+                    </div>
+                    <h1 className="text-3xl md:text-4xl font-black text-foreground tracking-tighter leading-none mb-2">
+                        {greeting}, <span className="bg-clip-text text-transparent bg-gradient-to-r from-accent to-primary">{fullName}!</span>
                     </h1>
-                    <p className="text-muted-foreground mt-1">
-                        Track your children's academic progress and activities.
+                    <p className="text-base text-muted-foreground max-w-xl font-medium">
+                        Track your children's academic progress and school activities.
                     </p>
-                </div>
-                <div className="px-4 py-2 bg-accent/10 rounded-2xl border border-accent/20 flex items-center gap-2">
-                    <Calendar className="h-4 w-4 text-accent" />
-                    <span className="text-sm font-semibold text-accent uppercase tracking-wider">
-                        Academic Session 2025 / 2026
-                    </span>
-                </div>
-            </div>
+                </motion.div>
+
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="bg-card border border-border p-3 rounded-2xl flex items-center gap-3 shadow-sm inline-flex"
+                >
+                    <div className="bg-accent/10 p-2 rounded-xl">
+                        <Calendar className="h-4 w-4 text-accent" />
+                    </div>
+                    <div>
+                        <p className="text-[10px] font-bold text-muted-foreground uppercase opacity-70">Current Session</p>
+                        <p className="text-xs font-black uppercase">2025 / 2026 Academic Year</p>
+                    </div>
+                </motion.div>
+            </section>
+
 
             {/* Children Section */}
             <div>
