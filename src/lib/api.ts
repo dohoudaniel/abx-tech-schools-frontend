@@ -105,6 +105,7 @@ export const createCourse = (data: { title: string; description?: string }) =>
   apiClient.post('/api/courses/', data);
 export const patchCourse = (id: number, data: Partial<{ title: string; description: string }>) =>
   apiClient.patch(`/api/courses/${id}/`, data);
+export const fetchCourse = (id: number) => apiClient.get(`/api/courses/${id}/`);
 export const fetchCourseStudents = (id: number) =>
   apiClient.get(`/api/courses/${id}/students/`);
 
