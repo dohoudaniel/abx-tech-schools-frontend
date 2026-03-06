@@ -38,7 +38,7 @@ const SettingsPage = () => {
         <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
           animate={{ opacity: 1, scale: 1 }}
-          className="md:col-span-1"
+          className="md:col-span-1 space-y-6"
         >
           <div className="rounded-2xl border border-border bg-card p-6 shadow-sm flex flex-col items-center text-center">
             <div className="h-24 w-24 rounded-full bg-accent/10 flex items-center justify-center mb-4 relative">
@@ -60,6 +60,17 @@ const SettingsPage = () => {
                 </div>
               </>
             )}
+          </div>
+
+          <div className="rounded-2xl border border-border bg-card p-6 flex flex-col gap-4 text-center items-center">
+            <div className="space-y-1">
+              <h4 className="font-semibold text-foreground">Sign Out</h4>
+              <p className="text-xs text-muted-foreground">End your current session safely.</p>
+            </div>
+            <Button variant="destructive" onClick={handleLogout} className="gap-2 w-full">
+              <LogOut className="h-4 w-4" />
+              Sign Out
+            </Button>
           </div>
         </motion.div>
 
@@ -135,17 +146,6 @@ const SettingsPage = () => {
                 <Button variant="outline" className="flex-1" disabled>Change Password</Button>
               </div>
             </div>
-          </div>
-
-          <div className="rounded-2xl border border-border bg-card p-6 flex items-center justify-between">
-            <div className="space-y-0.5">
-              <h4 className="font-semibold text-foreground">Sign Out</h4>
-              <p className="text-sm text-muted-foreground">End your current session on this device.</p>
-            </div>
-            <Button variant="destructive" onClick={handleLogout} className="gap-2">
-              <LogOut className="h-4 w-4" />
-              Sign Out
-            </Button>
           </div>
         </motion.div>
       </div>
