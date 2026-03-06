@@ -3,7 +3,7 @@ export interface User {
   email: string;
   first_name?: string;
   last_name?: string;
-  role?: 'teacher' | 'student';
+  role?: 'teacher' | 'student' | 'admin' | 'parent';
 }
 
 export interface Teacher {
@@ -31,18 +31,19 @@ export interface Student {
 
 export interface Course {
   id: number;
-  name: string;
+  title: string;
   description?: string;
-  teacher?: Teacher | number;
-  teacher_name?: string;
+  teacher?: number;
+  teacher_details?: Teacher;
   created_at?: string;
 }
 
 export interface Enrollment {
   id: number;
-  student: number | Student;
-  course: number | Course;
-  course_name?: string;
+  student: number;
+  student_details?: Student;
+  course: number;
+  course_details?: Course;
   enrolled_at?: string;
 }
 

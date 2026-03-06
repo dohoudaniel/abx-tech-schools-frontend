@@ -23,9 +23,9 @@ const CourseCard = ({ course, actionLabel, onAction, index = 0 }: CourseCardProp
         <BookOpen className="h-5 w-5 text-accent" />
       </div>
       <div className="flex-1 min-w-0">
-        <h3 className="font-semibold text-card-foreground truncate">{course.name}</h3>
-        {course.teacher_name && (
-          <p className="text-sm text-muted-foreground mt-1">by {course.teacher_name}</p>
+        <h3 className="font-semibold text-card-foreground truncate">{course.title}</h3>
+        {course.teacher_details && (
+          <p className="text-sm text-muted-foreground mt-1">by {course.teacher_details.first_name} {course.teacher_details.last_name}</p>
         )}
       </div>
     </div>

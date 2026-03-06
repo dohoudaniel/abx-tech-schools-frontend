@@ -9,7 +9,7 @@ interface EnrollmentButtonProps {
   isEnrolled?: boolean;
 }
 
-const EnrollmentButton = ({ studentId, courseId, isEnrolled }: EnrollmentButtonProps) => {
+const EnrollmentButton = ({ courseId, isEnrolled }: { courseId: number; isEnrolled?: boolean }) => {
   const { mutate, isPending } = useEnroll();
   const { toast } = useToast();
 
@@ -22,7 +22,7 @@ const EnrollmentButton = ({ studentId, courseId, isEnrolled }: EnrollmentButtonP
   }
 
   const handleEnroll = () => {
-    mutate({ student: studentId, course: courseId }, {
+    mutate({ course: courseId }, {
       onSuccess: () => toast({ title: 'Enrolled!', description: "Keep going — you're learning something new!" }),
       onError: (err: any) => {
         const msg = err?.response?.status === 400

@@ -10,7 +10,7 @@ import { Plus, CheckCircle } from 'lucide-react';
 
 const CreateCourseModal = () => {
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [success, setSuccess] = useState(false);
   const { mutate, isPending } = useCreateCourse();
@@ -18,12 +18,12 @@ const CreateCourseModal = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!name.trim()) return;
-    mutate({ name, description }, {
+    if (!title.trim()) return;
+    mutate({ title, description }, {
       onSuccess: () => {
         setSuccess(true);
         toast({ title: 'Course created', description: 'Students will see it immediately.' });
-        setTimeout(() => { setOpen(false); setSuccess(false); setName(''); setDescription(''); }, 1200);
+        setTimeout(() => { setOpen(false); setSuccess(false); setTitle(''); setDescription(''); }, 1200);
       },
       onError: () => {
         toast({ title: 'Error', description: 'Failed to create course.', variant: 'destructive' });
@@ -50,8 +50,8 @@ const CreateCourseModal = () => {
         ) : (
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <Label htmlFor="course-name">Course Name</Label>
-              <Input id="course-name" value={name} onChange={(e) => setName(e.target.value)} required placeholder="e.g. Introduction to Python" className="focus:focus-accent" />
+              <Label htmlFor="course-title">Course Title</Label>
+              <Input id="course-title" value={title} onChange={(e) => setTitle(e.target.value)} required placeholder="e.g. Introduction to Python" className="focus:focus-accent" />
             </div>
             <div>
               <Label htmlFor="course-desc">Description</Label>

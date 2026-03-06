@@ -98,16 +98,16 @@ export const loginApi = (email: string, password: string) =>
 
 // Courses
 export const fetchCourses = () => apiClient.get('/api/courses/');
-export const createCourse = (data: { name: string; description?: string }) =>
+export const createCourse = (data: { title: string; description?: string }) =>
   apiClient.post('/api/courses/', data);
-export const patchCourse = (id: number, data: Partial<{ name: string; description: string }>) =>
+export const patchCourse = (id: number, data: Partial<{ title: string; description: string }>) =>
   apiClient.patch(`/api/courses/${id}/`, data);
 export const fetchCourseStudents = (id: number) =>
   apiClient.get(`/api/courses/${id}/students/`);
 
 // Enrollments
 export const fetchEnrollments = () => apiClient.get('/api/enrollments/');
-export const createEnrollment = (data: { student: number; course: number }) =>
+export const createEnrollment = (data: { course: number }) =>
   apiClient.post('/api/enrollments/', data);
 export const deleteEnrollment = (id: number) =>
   apiClient.delete(`/api/enrollments/${id}/`);

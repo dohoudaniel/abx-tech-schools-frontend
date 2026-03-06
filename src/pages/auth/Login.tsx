@@ -12,7 +12,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login, setRole } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
@@ -71,28 +71,7 @@ const Login = () => {
                 aria-label="Password"
               />
             </div>
-
-            {/* Role selection for demo */}
-            <div className="flex gap-2">
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => setRole('teacher')}
-                className="flex-1 text-xs"
-              >
-                I'm a Teacher
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                onClick={() => setRole('student')}
-                className="flex-1 text-xs"
-              >
-                I'm a Student
-              </Button>
-            </div>
+            
 
             <Button
               type="submit"

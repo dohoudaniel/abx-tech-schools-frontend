@@ -33,7 +33,7 @@ const AppLayout = () => {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
 
-  const roleNav = role === 'teacher' ? teacherNav : studentNav;
+  const roleNav = (role === 'teacher' || role === 'admin') ? teacherNav : studentNav;
   const allNav = [...roleNav, ...sharedNav];
 
   const handleLogout = () => {
@@ -50,11 +50,10 @@ const AppLayout = () => {
             key={item.to}
             to={item.to}
             onClick={() => setMobileOpen(false)}
-            className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-              active
+            className={`flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium transition-colors ${active
                 ? 'bg-accent/10 text-accent'
                 : 'text-foreground/70 hover:bg-muted hover:text-foreground'
-            }`}
+              }`}
           >
             <item.icon className="h-4 w-4" />
             {item.label}

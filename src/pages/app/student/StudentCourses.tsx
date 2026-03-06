@@ -11,7 +11,7 @@ const StudentCourses = () => {
   const { user } = useAuth();
 
   const enrolledCourseIds = new Set(
-    enrollments?.map((e) => typeof e.course === 'number' ? e.course : e.course.id) ?? []
+    enrollments?.map((e) => e.course) ?? []
   );
 
   return (
@@ -31,7 +31,6 @@ const StudentCourses = () => {
                 <CourseCard course={c} index={i} />
                 <div className="mt-3">
                   <EnrollmentButton
-                    studentId={user?.id ?? 0}
                     courseId={c.id}
                     isEnrolled={enrolledCourseIds.has(c.id)}
                   />

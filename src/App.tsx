@@ -55,16 +55,20 @@ const App = () => (
                 <Route element={<AppLayout />}>
                   <Route path="/app" element={<AppIndex />} />
 
-                  {/* Teacher */}
-                  <Route path="/app/teacher" element={<TeacherDashboard />} />
-                  <Route path="/app/teacher/courses" element={<TeacherCourses />} />
-                  <Route path="/app/teacher/courses/:id" element={<CourseDetail />} />
-                  <Route path="/app/teacher/students" element={<TeacherStudents />} />
+                  {/* Teacher - Restricted */}
+                  <Route element={<ProtectedRoute allowedRoles={['teacher', 'admin']} />}>
+                    <Route path="/app/teacher" element={<TeacherDashboard />} />
+                    <Route path="/app/teacher/courses" element={<TeacherCourses />} />
+                    <Route path="/app/teacher/courses/:id" element={<CourseDetail />} />
+                    <Route path="/app/teacher/students" element={<TeacherStudents />} />
+                  </Route>
 
-                  {/* Student */}
-                  <Route path="/app/student" element={<StudentDashboard />} />
-                  <Route path="/app/student/courses" element={<StudentCourses />} />
-                  <Route path="/app/student/enrollments" element={<StudentEnrollments />} />
+                  {/* Student - Restricted */}
+                  <Route element={<ProtectedRoute allowedRoles={['student', 'admin']} />}>
+                    <Route path="/app/student" element={<StudentDashboard />} />
+                    <Route path="/app/student/courses" element={<StudentCourses />} />
+                    <Route path="/app/student/enrollments" element={<StudentEnrollments />} />
+                  </Route>
 
                   {/* Shared */}
                   <Route path="/app/teachers" element={<TeachersPage />} />

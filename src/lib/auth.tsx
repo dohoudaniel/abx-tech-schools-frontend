@@ -4,33 +4,37 @@ import type { User } from '@/types';
 
 interface AuthContextType {
   user: User | null;
-  role: 'teacher' | 'student' | null;
+  role: 'teacher' | 'student' | 'admin' | null;
   accessToken: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
-  setRole: (role: 'teacher' | 'student') => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [role, setRole] = useState<'teacher' | 'student' | null>(null);
+  const [role, setRole] = useState<'teacher' | 'student' | 'admin' | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(getAccessToken());
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const token = getAccessToken();
-    const savedRole = localStorage.getItem('abx_role') as 'teacher' | 'student' | null;
     if (token) {
       setAccessToken(token);
-      setRole(savedRole);
       // Decode JWT payload for basic user info
       try {
         const payload = JSON.parse(atob(token.split('.')[1]));
-        setUser({ id: payload.user_id, email: payload.email || '' });
+        setUser({
+          id: payload.user_id,
+          email: payload.email || '',
+        });
+        // We might want to store the role in the token too if we customized simplegwt, 
+        // but for now we also receive it in login data. Let's check localStorage for role first.
+        const savedRole = localStorage.getItem('abx_role') as any;
+        if (savedRole) setRole(savedRole);
       } catch {
         // Token invalid
       }
@@ -42,11 +46,11 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const { data } = await loginApi(email, password);
     setTokens(data.access, data.refresh);
     setAccessToken(data.access);
-    try {
-      const payload = JSON.parse(atob(data.access.split('.')[1]));
-      setUser({ id: payload.user_id, email: payload.email || email });
-    } catch {
-      setUser({ id: 0, email });
+
+    if (data.user) {
+      setUser(data.user);
+      setRole(data.user.role);
+      localStorage.setItem('abx_role', data.user.role);
     }
   }, []);
 
@@ -58,11 +62,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setAccessToken(null);
   }, []);
 
-  const handleSetRole = useCallback((r: 'teacher' | 'student') => {
-    setRole(r);
-    localStorage.setItem('abx_role', r);
-  }, []);
-
   return (
     <AuthContext.Provider value={{
       user,
@@ -72,7 +71,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       isLoading,
       login,
       logout,
-      setRole: handleSetRole,
     }}>
       {children}
     </AuthContext.Provider>

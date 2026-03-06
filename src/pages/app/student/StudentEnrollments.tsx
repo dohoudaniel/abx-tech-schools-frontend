@@ -42,7 +42,7 @@ const StudentEnrollments = () => {
               className="flex items-center justify-between rounded-lg border border-border bg-card p-4"
             >
               <div>
-                <p className="font-semibold text-card-foreground">{e.course_name || `Course #${typeof e.course === 'number' ? e.course : e.course.id}`}</p>
+                <p className="font-semibold text-card-foreground">{e.course_details?.title || `Course #${e.course}`}</p>
                 <p className="text-sm text-muted-foreground">Enrolled {e.enrolled_at ? new Date(e.enrolled_at).toLocaleDateString() : ''}</p>
               </div>
               <AlertDialog>

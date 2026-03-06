@@ -39,7 +39,7 @@ export const useFetchCourseStudents = (courseId: number) =>
 export const useCreateCourse = () => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (data: { name: string; description?: string }) => createCourse(data),
+    mutationFn: (data: { title: string; description?: string }) => createCourse(data),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['courses'] }),
   });
 };
@@ -47,7 +47,7 @@ export const useCreateCourse = () => {
 export const useEnroll = () => {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (data: { student: number; course: number }) => createEnrollment(data),
+    mutationFn: (data: { course: number }) => createEnrollment(data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['enrollments'] });
       qc.invalidateQueries({ queryKey: ['courses'] });
